@@ -18,5 +18,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GatewaysManagement.Data\GatewaysManagement.Data.csproj" />
+    <ProjectReference Include="..\GatewaysManagement.Services\GatewaysManagement.Services.csproj" />
+  </ItemGroup>
+
 
 </Project>
