@@ -2,7 +2,6 @@
 using GatewaysManagement.Data.Entities;
 using GatewaysManagement.Data.UoW;
 using GatewaysManagement.Services.Utils;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +27,7 @@ namespace GatewaysManagement.Services.Impls
         }
         public async Task<Device> GetDeviceAsync(Guid deviceId)
         {
-            return await _uow.DeviceRepository.FindAsync(b => b.Id == deviceId);
+            return await _uow.DeviceRepository.GetDeviceWithGateway(deviceId);
         }
 
         public async Task<IEnumerable<Device>> GetDevicesAsync(Guid gatewayId)
@@ -72,13 +71,13 @@ namespace GatewaysManagement.Services.Impls
             await _uow.CommitAsync();
         }
 
-        public async Task UpdateDeviceAsync(Guid deviceId, Device deviceToBeUpdate)
+        public async Task UpdateDeviceAsync(Device deviceToBeUpdate)
         {
             if (deviceToBeUpdate == null)
             {
                 throw new ArgumentNullException(nameof(deviceToBeUpdate));
             }
-            await _uow.DeviceRepository.UpdateAsync(deviceToBeUpdate, deviceId);
+            _uow.DeviceRepository.Update(deviceToBeUpdate);
             await _uow.CommitAsync();
         }
 
@@ -86,6 +85,12 @@ namespace GatewaysManagement.Services.Impls
         {
             _uow.DeviceRepository.Delete(device);
             await _uow.CommitAsync();
+        }
+
+        public async Task<bool> ValidUID(int UID)
+        {
+            var devices = await _uow.DeviceRepository.FindAllAsync(d => d.UID == UID);
+            return devices.Count == 0;
         }
     }
 }

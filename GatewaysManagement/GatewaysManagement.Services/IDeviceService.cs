@@ -13,8 +13,9 @@ namespace GatewaysManagement.Services
         Task<IEnumerable<Device>> GetDevicesAsync(Guid gatewayId);
         Task<PageList<Device>> GetDevicesAsync(Guid gatewayId, ResourceParameters parameters);
         Task AddDeviceAsync(Device device);
-        Task UpdateDeviceAsync(Guid deviceId, Device deviceToBeUpdate);
+        Task UpdateDeviceAsync(Device deviceToBeUpdate);
         Task DeleteDeviceAsync(Device device);
+        Task<bool> ValidUID(int UID);
 
     }
 }
