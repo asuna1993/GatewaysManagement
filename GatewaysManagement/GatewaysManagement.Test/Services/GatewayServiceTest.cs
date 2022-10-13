@@ -1,15 +1,10 @@
 ﻿using GatewaysManagement.Services.Impls;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using NSubstitute;
 using GatewaysManagement.Data;
-using GatewaysManagement.Services;
 using GatewaysManagement.Test.MockData;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using GatewaysManagement.Data.Entities;
 using GatewaysManagement.Data.UoW;
@@ -20,7 +15,7 @@ namespace GatewaysManagement.Test.Services
     public class GatewayServiceTest : IServiceTest<GatewayService>
     {
         [Fact]
-        public async Task GetGatewayAsync_Test()
+        public async void GetGatewayAsync_Test()
         {
             using (CoreDbContext context = GetSampleData("CoreDbContext"))
             {
@@ -32,7 +27,7 @@ namespace GatewaysManagement.Test.Services
         }
 
         [Fact]
-        public async Task GetGatewaysAsync_Test()
+        public async void GetGatewaysAsync_Test()
         {
             using (CoreDbContext context = GetSampleData("CoreDbContext"))
             {
@@ -43,7 +38,7 @@ namespace GatewaysManagement.Test.Services
         }
 
         [Fact]
-        public async Task AddGatewayAsync_Test()
+        public async void AddGatewayAsync_Test()
         {
             using (CoreDbContext context = GetSampleData("CoreDbContext"))
             {
@@ -59,7 +54,7 @@ namespace GatewaysManagement.Test.Services
                 GatewayService gatewayService = InitService(context);
 
                 await gatewayService.AddGatewayAsync(gateway);
-                Gateway gatewaySaved = modelBuilder.GetMockGateway(gateway.Id);
+                Gateway gatewaySaved = await gatewayService.GetGatewayAsync(gateway.Id);
 
                 Assert.NotNull(gatewaySaved);
                 Assert.Equal(gateway, gatewaySaved);
@@ -67,7 +62,7 @@ namespace GatewaysManagement.Test.Services
         }
 
         [Fact]
-        public async Task UpdateGatewayAsync_Test()
+        public async void UpdateGatewayAsync_Test()
         {
             var GatewayIdToGet = Guid.Parse("9D2DD00A-6FE8-464B-85B4-7B05B8CBF59F");
             var nameToChangeGateway = "New Name";
@@ -78,12 +73,13 @@ namespace GatewaysManagement.Test.Services
 
                 GatewayService gatewayService = InitService(context);
 
-                Gateway gatewayToUpdate = modelBuilder.GetMockGateway(GatewayIdToGet);
+                Gateway gatewayToUpdate = await gatewayService.GetGatewayAsync(GatewayIdToGet);
 
                 gatewayToUpdate.Name = nameToChangeGateway;
 
-                await gatewayService.UpdateGatewayAsync(GatewayIdToGet, gatewayToUpdate);
-                Gateway gatewaySaved = modelBuilder.GetMockGateway(GatewayIdToGet);
+                await gatewayService.UpdateGatewayAsync(gatewayToUpdate);
+                Gateway gatewaySaved = await gatewayService.GetGatewayAsync(GatewayIdToGet);
+
 
                 Assert.NotNull(gatewaySaved);
                 Assert.Equal(gatewaySaved.Id, GatewayIdToGet);
@@ -92,7 +88,7 @@ namespace GatewaysManagement.Test.Services
         }
 
         [Fact]
-        public async Task DeleteGatewayAsync_Test()
+        public async void DeleteGatewayAsync_Test()
         {
             var GatewayIdToDelete = Guid.Parse("9D2DD00A-6FE8-464B-85B4-7B05B8CBF59F");
 
@@ -102,11 +98,11 @@ namespace GatewaysManagement.Test.Services
 
                 GatewayService gatewayService = InitService(context);
 
-                Gateway gatewayToDelete = modelBuilder.GetMockGateway(GatewayIdToDelete);
+                Gateway gatewayToDelete = await gatewayService.GetGatewayAsync(GatewayIdToDelete);
 
                 await gatewayService.DeleteGatewayAsync(gatewayToDelete);
 
-                Assert.Null(modelBuilder.GetMockGateway(GatewayIdToDelete));
+                Assert.Null(await gatewayService.GetGatewayAsync(GatewayIdToDelete));
             }
         }
 
@@ -116,6 +112,10 @@ namespace GatewaysManagement.Test.Services
             builder.UseInMemoryDatabase(databaseName: db);
             CoreDbContext context = new CoreDbContext(builder.Options);
             MockModelBuilder modelBuilder = new MockModelBuilder();
+
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
             Gateway gateway = modelBuilder.GetMockGateway(Guid.Parse("9D2DD00A-6FE8-464B-85B4-7B05B8CBF59F"));
             context.Add(gateway);
             context.SaveChanges();

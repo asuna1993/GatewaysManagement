@@ -10,13 +10,6 @@ namespace GatewaysManagement.Test.MockData
     {
         public override Device GetSingleObject(Guid id)
         {
-            Gateway gateway = new Gateway
-            {
-                Id = Guid.Parse("1E5DB10J-6HL8-4T5B-85B4-7B05C8DBH59G"),
-                Name = "Test Name",
-                IPAdress = "192.168.1.1",
-                SerialNumber = "123456789"
-            };
 
             return new Device
             {
@@ -25,8 +18,7 @@ namespace GatewaysManagement.Test.MockData
                 Vendor = "Vendor Test",
                 Status = StatusEnum.ONLINE,
                 CreatedAt = DateTime.Now,
-                GatewayId = gateway.Id,
-                Gateway = gateway
+                GatewayId = Guid.Parse("0c13787a-91a6-4f47-b06c-3912d91e0f5a")
             };
         }
     }
