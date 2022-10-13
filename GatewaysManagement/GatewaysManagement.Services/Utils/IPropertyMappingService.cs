@@ -1,5 +1,4 @@
-﻿using GatewaysManagement.Services.Utils;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GatewaysManagement.Services.Utils
 {

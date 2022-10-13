@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using GatewaysManagement.Common.DTO.Response;
 using GatewaysManagement.Data.Entities;
-using GatewaysManagement.Services.Utils;
 
 namespace GatewaysManagement.Services.Utils
 {
