@@ -2,6 +2,6 @@
 {
     public enum StatusEnum
     {
-        ONLINE, OFFLINE
+        OFFLINE, ONLINE 
     }
 }
