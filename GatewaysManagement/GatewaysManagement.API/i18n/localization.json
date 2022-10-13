@@ -1,0 +1,121 @@
+[
+  { //BadRequests
+    "Key": "400",
+    "LocalizedValue": {
+      "en-US": "Request with malformed syntax.",
+      "es-ES": "Petición mal formada."
+    }
+  },
+  {
+    "Key": "400001",
+    "LocalizedValue": {
+      "en-US": "The serial number is already in use.",
+      "es-ES": "El número de serie ya está siendo usado."
+    }
+  },
+  {
+    "Key": "400002",
+    "LocalizedValue": {
+      "en-US": "The IPv4 address is incorrect.",
+      "es-ES": "La dirección IPv4 es incorrecta."
+    }
+  },
+  {
+    "Key": "400003",
+    "LocalizedValue": {
+      "en-US": "The Name can't be Empty.",
+      "es-ES": "El nombre no puede estar vacío."
+    }
+  },
+  {
+    "Key": "400004",
+    "LocalizedValue": {
+      "en-US": "The UID is already in use.",
+      "es-ES": "El UID ya está siendo usado."
+    }
+  },
+  {
+    "Key": "400005",
+    "LocalizedValue": {
+      "en-US": "The Vendor can't be Empty.",
+      "es-ES": "El Vendor no puede estar vacío."
+    }
+  },
+  },
+  //Unauthorized
+  {
+    "Key": "401",
+    "LocalizedValue": {
+      "en-US": "Unauthorized access. Requires user authentication.",
+      "es-ES": "Acceso no autorizado. Requiere autenticación."
+    }
+  },
+  {
+    "Key": "401001",
+    "LocalizedValue": {
+      "en-US": "You don't have permissions to access the resource.",
+      "es-ES": "Usted no tiene permisos para acceder al recurso."
+    }
+  },
+  //Forbidden
+  {
+    "Key": "403",
+    "LocalizedValue": {
+      "en-US": "Forbidden request.",
+      "es-ES": "Petición prohibida."
+    }
+  },
+  {
+    "Key": "403001",
+    "LocalizedValue": {
+      "en-US": "Your access is blocked because your account is inactive.",
+      "es-ES": "Su acceso ha sido bloqueado porque su cuenta no ha sido activada."
+    }
+  },
+  {
+    "Key": "403002",
+    "LocalizedValue": {
+      "en-US": "You cannot disable your account.",
+      "es-ES": "No puede deshabilitar su cuenta."
+    }
+  },
+  //NotFound
+  {
+    "Key": "404",
+    "LocalizedValue": {
+      "en-US": "Resource not found.",
+      "es-ES": "Recurso no encontrado."
+    }
+  },
+  {
+    "Key": "404001",
+    "LocalizedValue": {
+      "en-US": "Gateway not found.",
+      "es-ES": "Gateway no encontrado."
+    }
+  },
+  {
+    "Key": "404002",
+    "LocalizedValue": {
+      "en-US": "Device not found.",
+      "es-ES": "Dispositivo no encontrado."
+    }
+  },
+  //RequestTimeout
+  {
+    "Key": "408",
+    "LocalizedValue": {
+      "en-US": "Request timeout.",
+      "es-ES": "Tiempo de espera agotado."
+    }
+  },
+  //InternalServerError
+  {
+    "Key": "500",
+    "LocalizedValue": {
+      "en-US": "Internal server error.",
+      "es-ES": "Error interno del servidor."
+    }
+  }
+
+]
