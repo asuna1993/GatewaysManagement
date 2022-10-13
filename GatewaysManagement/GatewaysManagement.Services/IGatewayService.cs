@@ -13,8 +13,9 @@ namespace GatewaysManagement.Services
         Task<IEnumerable<Gateway>> GetGatewaysAsync();
         Task<PageList<Gateway>> GetGatewaysAsync(ResourceParameters resourceParameters);
         Task AddGatewayAsync(Gateway gateway);
-        Task UpdateGatewayAsync(Guid gatewayId, Gateway gatewayToBeUpdate);
+        Task UpdateGatewayAsync(Gateway gatewayToBeUpdate);
         Task DeleteGatewayAsync(Gateway gateway);
+        Task<int> CountAssociatedDevices(Guid gatewayId);
 
     }
 }

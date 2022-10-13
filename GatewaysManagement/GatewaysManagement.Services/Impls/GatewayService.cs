@@ -72,14 +72,14 @@ namespace GatewaysManagement.Services.Impls
             await _uow.CommitAsync();
         }
 
-        public async Task UpdateGatewayAsync(Guid gatewayId, Gateway gatewayToBeUpdate)
+        public async Task UpdateGatewayAsync(Gateway gatewayToBeUpdate)
         {
             if (gatewayToBeUpdate == null)
             {
                 throw new ArgumentNullException(nameof(gatewayToBeUpdate));
             }
 
-            await _uow.GatewayRepository.UpdateAsync(gatewayToBeUpdate, gatewayId);
+            _uow.GatewayRepository.Update(gatewayToBeUpdate);
             await _uow.CommitAsync();
         }
         
@@ -87,6 +87,13 @@ namespace GatewaysManagement.Services.Impls
         {
             _uow.GatewayRepository.Delete(gateway);
             await _uow.CommitAsync();
+        }
+
+        public async Task<int> CountAssociatedDevices(Guid gatewayId)
+        {
+            var gateway = await _uow.GatewayRepository.GetGatewayWithDevices(gatewayId);
+
+            return gateway.Devices.Count;
         }
     }
 }
