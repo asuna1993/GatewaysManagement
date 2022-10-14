@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: Hosted Windows 2019 with VS2019
   #vmImage: 'windows-latest'
 
 variables:
@@ -16,32 +16,30 @@ variables:
   buildConfiguration: 'Release'
 
   steps:
-    - task: UseDotNet@2 
-      displayName: "Restore"
-      inputs:
-        version: '3.1.x'
-        packageType: sdk
-    - script: dotnet restore GatewaysManagement.API.csproj
-      displayName: 'dotnet Restore'
-
     - task: UseDotNet@2
-      displayName: "Build"
+      displayName: 'Use .NET SDK 3.1'
       inputs:
+        packageType: 'sdk'
         version: '3.1.x'
-        packageType: sdk
-    - script: dotnet build --configuration $(buildConfiguration) GatewaysManagement.API.csproj
-      displayName: 'dotnet build $(buildConfiguration) GatewaysManagement.API.csproj'
 
     - task: DotNetCoreCLI@2
-      displayName: "Publish Artifacts"
+      displayName: 'Restore project dependencies'
+      inputs:
+        command: 'restore'
+        projects: '**/*.csproj'
+
+    - task: DotNetCoreCLI@2 
+      displayName: 'Build the project - $(buildConfiguration)' 
+      inputs: 
+        command: 'build' 
+        arguments: '--no-restore --configuration $(buildConfiguration)' 
+        projects: '**/*.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish the project - $(buildConfiguration)'
       inputs:
         command: 'publish'
-        publishWebProjects: true
-        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        projects: '**/GatewaysManagement.API.csproj'
+        publishWebProjects: false
+        arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
         zipAfterPublish: true
-
-    - task: PublishBuildArtifacts@1
-      displayName: "ArtefactName"
-      inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-        artifactName: 'ArtefactName'
