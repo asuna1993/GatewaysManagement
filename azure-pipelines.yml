@@ -7,39 +7,34 @@ trigger:
 - master
 
 pool:
-  name: Hosted Windows 2019 with VS2019
-  #vmImage: 'windows-latest'
+  vmImage: 'windows-latest'
 
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-  steps:
-    - task: UseDotNet@2
-      displayName: 'Use .NET SDK 3.1'
-      inputs:
-        packageType: 'sdk'
-        version: '3.1.x'
+steps:
+- task: UseDotNet@2
+  displayName: 'Use .NET SDK 3.1'
+  inputs:
+    packageType: 'sdk'
+    version: '3.1.x' 
 
-    - task: DotNetCoreCLI@2
-      displayName: 'Restore project dependencies'
-      inputs:
-        command: 'restore'
-        projects: '**/*.csproj'
+- task: NuGetToolInstaller@1
 
-    - task: DotNetCoreCLI@2 
-      displayName: 'Build the project - $(buildConfiguration)' 
-      inputs: 
-        command: 'build' 
-        arguments: '--no-restore --configuration $(buildConfiguration)' 
-        projects: '**/*.csproj'
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
 
-    - task: DotNetCoreCLI@2
-      displayName: 'Publish the project - $(buildConfiguration)'
-      inputs:
-        command: 'publish'
-        projects: '**/GatewaysManagement.API.csproj'
-        publishWebProjects: false
-        arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
-        zipAfterPublish: true
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
