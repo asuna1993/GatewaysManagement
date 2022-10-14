@@ -21,22 +21,12 @@ namespace GatewaysManagement.Test.Services
             using (CoreDbContext context = GetSampleData("CoreDbContext"))
             {
                 DeviceService deviceService = InitService(context);
-                Device device = await deviceService.GetDeviceAsync(Guid.Parse("9D2DD00A-6FE8-464B-85B4-7B05B8CBF59F"));
+                Device device = await deviceService.GetDeviceAsync(Guid.Parse("75c3b965-c98a-4b9a-8d67-2cf9a3a98f1d"));
                 Assert.NotNull(device);
-                Assert.Equal(Guid.Parse("9D2DD00A-6FE8-464B-85B4-7B05B8CBF59F"), device.Id);
+                Assert.Equal(Guid.Parse("75c3b965-c98a-4b9a-8d67-2cf9a3a98f1d"), device.Id);
             }
         }
 
-        [Fact]
-        public async void GetDevicesAsync_Test()
-        {
-            using (CoreDbContext context = GetSampleData("CoreDbContext"))
-            {
-                DeviceService deviceService = InitService(context);
-                IEnumerable<Device> device = await deviceService.GetDevicesAsync(Guid.Parse("0c13787a-91a6-4f47-b06c-3912d91e0f5a"));
-                Assert.NotEmpty(device);
-            }
-        }
 
         [Fact]
         public async void AddDeviceAsync_Test()
@@ -91,7 +81,7 @@ namespace GatewaysManagement.Test.Services
         [Fact]
         public async void DeleteDeviceAsync_Test()
         {
-            var DeviceIdToDelete = Guid.Parse("9D2DD00A-6FE8-464B-85B4-7B05B8CBF59F");
+            var DeviceIdToDelete = Guid.Parse("08f7f9aa-6e41-49b0-82c1-1eba26ead6fc");
 
             using (CoreDbContext context = GetSampleData("CoreDbContext"))
             {
@@ -123,6 +113,12 @@ namespace GatewaysManagement.Test.Services
 
             Device device = modelBuilder.GetMockDevice(Guid.Parse("9D2DD00A-6FE8-464B-85B4-7B05B8CBF59F"));
             context.Add(device);
+
+            Device device2 = modelBuilder.GetMockDevice(Guid.Parse("08f7f9aa-6e41-49b0-82c1-1eba26ead6fc"));
+            context.Add(device2);
+
+            Device device3 = modelBuilder.GetMockDevice(Guid.Parse("75c3b965-c98a-4b9a-8d67-2cf9a3a98f1d"));
+            context.Add(device3);
 
             context.SaveChanges();
             return context;

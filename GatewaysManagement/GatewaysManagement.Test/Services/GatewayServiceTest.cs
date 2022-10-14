@@ -20,9 +20,9 @@ namespace GatewaysManagement.Test.Services
             using (CoreDbContext context = GetSampleData("CoreDbContext"))
             {
                 GatewayService gatewayService = InitService(context);
-                Gateway gateway = await gatewayService.GetGatewayAsync(Guid.Parse("9D2DD00A-6FE8-464B-85B4-7B05B8CBF59F"));
+                Gateway gateway = await gatewayService.GetGatewayAsync(Guid.Parse("af32fea6-1a8b-428f-872c-6a1ce83d8028"));
                 Assert.NotNull(gateway);
-                Assert.Equal(Guid.Parse("9D2DD00A-6FE8-464B-85B4-7B05B8CBF59F"), gateway.Id);
+                Assert.Equal(Guid.Parse("af32fea6-1a8b-428f-872c-6a1ce83d8028"), gateway.Id);
             }
         }
 
@@ -64,7 +64,7 @@ namespace GatewaysManagement.Test.Services
         [Fact]
         public async void UpdateGatewayAsync_Test()
         {
-            var GatewayIdToGet = Guid.Parse("9D2DD00A-6FE8-464B-85B4-7B05B8CBF59F");
+            var GatewayIdToGet = Guid.Parse("50b572ec-7a15-4ff5-aca3-4659d599b527");
             var nameToChangeGateway = "New Name";
             
             using (CoreDbContext context = GetSampleData("SelltxtDbText"))
@@ -90,7 +90,7 @@ namespace GatewaysManagement.Test.Services
         [Fact]
         public async void DeleteGatewayAsync_Test()
         {
-            var GatewayIdToDelete = Guid.Parse("9D2DD00A-6FE8-464B-85B4-7B05B8CBF59F");
+            var GatewayIdToDelete = Guid.Parse("adea8952-f6e6-4c30-9356-6bcbb8fb2c46");
 
             using (CoreDbContext context = GetSampleData("CoreDbContext"))
             {
@@ -116,8 +116,15 @@ namespace GatewaysManagement.Test.Services
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            Gateway gateway = modelBuilder.GetMockGateway(Guid.Parse("9D2DD00A-6FE8-464B-85B4-7B05B8CBF59F"));
+            Gateway gateway = modelBuilder.GetMockGateway(Guid.Parse("50b572ec-7a15-4ff5-aca3-4659d599b527"));
             context.Add(gateway);
+
+            Gateway gateway2 = modelBuilder.GetMockGateway(Guid.Parse("af32fea6-1a8b-428f-872c-6a1ce83d8028"));
+            context.Add(gateway2);
+
+            Gateway gateway3 = modelBuilder.GetMockGateway(Guid.Parse("adea8952-f6e6-4c30-9356-6bcbb8fb2c46"));
+            context.Add(gateway3);
+
             context.SaveChanges();
             return context;
         }
