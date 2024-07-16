@@ -16,6 +16,7 @@ namespace GatewaysManagement.Services
         Task UpdateDeviceAsync(Device deviceToBeUpdate);
         Task DeleteDeviceAsync(Device device);
         Task<bool> ValidUID(int UID);
+        Task<bool> ValidUID(Guid deviceId, int UID);
 
     }
 }

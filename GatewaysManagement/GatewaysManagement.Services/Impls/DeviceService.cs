@@ -92,5 +92,11 @@ namespace GatewaysManagement.Services.Impls
             var devices = await _uow.DeviceRepository.FindAllAsync(d => d.UID == UID);
             return devices.Count == 0;
         }
+
+        public async Task<bool> ValidUID(Guid deviceId, int UID)
+        {
+            var devices = await _uow.DeviceRepository.FindAllAsync(d => d.UID == UID && d.Id != deviceId);
+            return devices.Count == 0;
+        }
     }
 }

@@ -101,6 +101,7 @@ namespace DevicesManagement.API.Controllers
         [HttpPut("gateway/{gatewayId}/device/{deviceId}", Name = "UpdateDevice")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Conflict)]
         public async Task<IActionResult> UpdateDevice(Guid gatewayId, Guid deviceId, [FromBody] CreateDeviceRequest device)
         {
             if (!_deviceService.DeviceExists(deviceId))
@@ -112,7 +113,7 @@ namespace DevicesManagement.API.Controllers
                 return NotFound("Gateway");
             }
 
-            if (!await _deviceService.ValidUID(device.UID))
+            if (!await _deviceService.ValidUID(deviceId, device.UID))
             {
                 return Conflict("The UID must be unique.");
             }
