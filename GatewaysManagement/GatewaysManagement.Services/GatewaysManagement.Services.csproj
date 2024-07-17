@@ -7,7 +7,6 @@
   <ItemGroup>
     <PackageReference Include="Askmethat.Aspnet.JsonLocalizer" Version="4.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.29" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
     <PackageReference Include="rlcx.suid" Version="1.0.1" />
     <PackageReference Include="SendGrid" Version="9.28.1" />
