@@ -16,6 +16,8 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using GatewaysManagement.API.Utils;
 
 namespace GatewaysManagement
 {
@@ -96,8 +98,9 @@ namespace GatewaysManagement
 
             services.ConfigureDetection();
 
+      
             services.AddHttpContextAccessor();
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(MappingProfiles));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IGatewayService, GatewayService>();
